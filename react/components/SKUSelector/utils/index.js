@@ -1,6 +1,4 @@
 import {
-  curry,
-  clone,
   values,
   compose,
   map,
@@ -40,16 +38,17 @@ export const stripUrl = url => url.replace(/^https?:/, '')
  * @param {sku} sku
  */
 export const parseSku = sku => {
-  const result = clone(sku)
-
-  const variations = sku.variations.map(variation => {
-    result[variation.name] = variation.values[0]
-    return variation.name
-  })
-
-  result.variations = variations
-
-  return result
+  const variationsFields = sku.variations.reduce((acc, variation) => {
+    return {
+      ...acc,
+      [variation.name]: variation.values[0]
+    }
+  }, {})
+  return {
+    ...sku,
+    variations: sku.variations.map(prop('name')),
+    ...variationsFields,
+  }
 }
 
 const getQuantity = path([

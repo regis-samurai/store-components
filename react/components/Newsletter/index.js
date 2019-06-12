@@ -35,6 +35,7 @@ class Newsletter extends Component {
   }
 
   handleChangeEmail = e => {
+    console.log('teste change: ', e)
     this.setState({ email: e.target.value })
   }
 
@@ -59,12 +60,13 @@ class Newsletter extends Component {
       success: null,
     })
 
+    console.log({ variables: { email: this.state.email } })
     this.props
       .subscribeNewsletter({ variables: { email: this.state.email } })
       .then(() => {
         this.safeSetState({ success: true, loading: false })
       })
-      .catch(e => {
+      .catch(error => {
         this.safeSetState({ error: true, loading: false })
       })
   }

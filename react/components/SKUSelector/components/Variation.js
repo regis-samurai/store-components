@@ -12,7 +12,8 @@ import { imageUrlForSize, VARIATION_IMG_SIZE } from '../../module/images'
 
 const ITEMS_VISIBLE_THRESHOLD = 2
 
-const Variation = ({ variation, onSelectItem, maxSkuPrice, checkSelected, seeMoreLabel, maxItems }) => {
+const Variation = ({ variation, maxSkuPrice, seeMoreLabel, maxItems, selectedItem }) => {
+  console.log('testa Variation RENDER')
   const displayImage = isColor(variation.name)
   const { options } = variation
   const [showAll, setShowAll] = useState(false)
@@ -41,32 +42,20 @@ const Variation = ({ variation, onSelectItem, maxSkuPrice, checkSelected, seeMor
           {variation.name}
         </span>
         <div className="inline-flex flex-wrap ml2 flex items-center">
-          {displayOptions.map(skuItem => {
-            const [skuImage] = skuItem.images || [null]
-            const [seller] = skuItem.sellers
+          {displayOptions.map(option => {
+            const [skuImage] = option.images || [null]
             return (
               <SelectorItem
-                isSelected={checkSelected(skuItem)}
-                key={skuItem.itemId}
-                isAvailable={seller.commertialOffer.AvailableQuantity > 0}
+                isSelected={option.label === selectedItem}
+                key={`${option.label}-${variation.name}`}
+                isAvailable={option.available}
                 maxPrice={maxSkuPrice}
-                skuId={skuItem.itemId}
-                price={seller.commertialOffer.Price}
-                onClick={() => onSelectItem(skuItem.itemId)}
+                onClick={option.onSelectItem}
                 isImage={displayImage}
-                variationValue={skuItem[variation.name]}
-              >
-                {displayImage && skuImage ? (
-                  <img 
-                    src={imageUrlForSize(stripUrl(skuImage.imageUrl), VARIATION_IMG_SIZE)}
-                    alt={skuImage.imageLabel}
-                  />
-                ) : (
-                  <span className="c-on-base t-body">
-                    {skuItem[variation.name]}
-                  </span>
-                )}
-              </SelectorItem>
+                variationValue={option.label}
+                imageUrl={skuImage && imageUrlForSize(stripUrl(skuImage.imageUrl), VARIATION_IMG_SIZE)}
+                imageLabel={skuImage && skuImage.imageLabel}
+              />
             )
           })}
           {!showAll && shouldCollapse && (
@@ -94,5 +83,17 @@ Variation.propTypes = {
   seeMoreLabel: PropTypes.string,
   maxItems: PropTypes.number,
 }
+
+// export default memo(Variation, (prevProps, nextProps) => {
+//   console.log('testi variation name: ', nextProps.variation.name)
+//   console.log('testi variation prevProps: ', prevProps)
+//   console.log('testi variation nextProps: ', nextProps)
+//   if (nextProps.variation.name === 'Color') {
+//     console.log('testi is variation equal: ', prevProps.variation === nextProps.variation)
+//     // console.log('testi ')
+//     // console.log('testi is selectedVariations equal: ', prevProps.selectedVariations === nextProps.selectedVariations)
+//   }
+//   return false
+// })
 
 export default memo(Variation)

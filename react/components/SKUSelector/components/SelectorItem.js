@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedNumber } from 'react-intl'
 import classNames from 'classnames'
@@ -19,14 +19,16 @@ const getDiscount = (maxPrice, price) => {
 const SelectorItem = ({
   isAvailable = true,
   isSelected = false,
-  children = null,
   maxPrice,
   price,
   onClick,
   isImage,
   variationValue,
+  imageUrl,
+  imageLabel,
 }) => {
   const discount = getDiscount(maxPrice, price)
+  console.log('testa SelectorItem render')
 
   return (
     <div
@@ -68,7 +70,16 @@ const SelectorItem = ({
         <div
           className={classNames({ 'c-on-base center pl5 pr5 z-1': !isImage })}
         >
-          {children}
+          {isImage && imageUrl ? (
+            <img 
+              src={imageUrl}
+              alt={imageLabel}
+            />
+          ) : (
+            <span className="c-on-base t-body">
+              {variationValue}
+            </span>
+          )}
         </div>
       </div>
       {discount > 0 && (
@@ -101,4 +112,4 @@ SelectorItem.propTypes = {
   variationValue: PropTypes.string.isRequired,
 }
 
-export default SelectorItem
+export default memo(SelectorItem)

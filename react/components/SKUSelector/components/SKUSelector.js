@@ -1,53 +1,80 @@
 import PropTypes from 'prop-types'
-import React, { useCallback, memo } from 'react'
+import React, { useCallback, useMemo, memo, Fragment } from 'react'
 
 import Variation from './Variation'
 import { variationShape } from '../utils/proptypes'
+import hash from 'object-hash'
 
 import styles from '../styles.css'
 
 /** Renders the main and the secondary variation, if it exists. */
 const SKUSelector = ({
-  onSelectSKU,
-  mainVariation,
-  secondaryVariation,
-  maxSkuPrice,
-  alwaysShowSecondary,
   seeMoreLabel,
   maxItems,
+  variations,
+  stateMachine,
+  currentStateHash,
 }) => {
-  if (!mainVariation) return null
+  console.log('testa SKUSelector RENDER')
+  const { states: stateMachineStates } = stateMachine
+  const stateMachineState = stateMachineStates[currentStateHash]
+  const { on: transitions, variations: selectedVariations } = stateMachineState
 
-  const shouldShowSecondary =
-    (alwaysShowSecondary || mainVariation.value) && secondaryVariation.name
+  const onSelectItem = useCallback(actionHash => () => stateMachine.interpret.send(actionHash), [stateMachine])
+  const variationsWithOptions = useMemo(() => Object.keys(variations).map((variationName) => { 
+    const selectedItem = selectedVariations[variationName]
+    const options = variations[variationName].reduce(
+      (accumulator, label) => {
+        const selected = selectedItem === label
 
-  const mainOnSelectItem = useCallback(skuId => onSelectSKU(true, skuId), [onSelectSKU])
-  const mainCheckSelected = useCallback(sku => sku[mainVariation.name] === mainVariation.value, [mainVariation])
+        const actionHash = hash({
+          variation: variationName,
+          label: selected ? null : label,
+        })
 
-  const secondaryOnSelectItem = useCallback(skuId => onSelectSKU(false, skuId), [onSelectSKU])
-  const secondaryCheckSelected = useCallback(sku => sku.itemId === secondaryVariation.value, [secondaryVariation])
+        const nextStateHash = transitions[actionHash]
+
+        if (nextStateHash || selected) {
+          const available = selected
+            ? stateMachineState.available
+            : stateMachineStates[nextStateHash].available
+
+          const images = selected ? stateMachineState.images : stateMachineStates[nextStateHash].images
+
+          accumulator.push({
+            label,
+            available,
+            images,
+            onSelectItem: onSelectItem(actionHash),
+          })
+        }
+        return accumulator
+      },
+      []
+    )
+    return {
+      name: variationName,
+      options,
+    }
+  }), [variations, currentStateHash, stateMachine])
+
+  console.log('teste variationsWithOptions: ', variationsWithOptions)
 
   return (
-    <div className={styles.skuSelectorContainer}>
-      <Variation
-        variation={mainVariation}
-        onSelectItem={mainOnSelectItem}
-        checkSelected={mainCheckSelected}
-        maxSkuPrice={maxSkuPrice}
-        seeMoreLabel={seeMoreLabel}
-        maxItems={maxItems}
-      />
-      {shouldShowSecondary && (
-        <Variation
-          variation={secondaryVariation}
-          onSelectItem={secondaryOnSelectItem}
-          checkSelected={secondaryCheckSelected}
-          maxSkuPrice={maxSkuPrice}
-          seeMoreLabel={seeMoreLabel}
-          maxItems={maxItems}
-        />
-      )}
-    </div>
+    <Fragment>
+      {variationsWithOptions.map((variationOption, index) => {
+        const selectedItem = selectedVariations[variationOption.name]
+        return (
+          <Variation
+            key={`${variationOption.name}-${index}`}
+            variation={variationOption}
+            selectedItem={selectedItem}
+            maxItems={maxItems}
+            seeMoreLabel={seeMoreLabel}
+          />
+        )
+      })}
+    </Fragment>
   )
 }
 
