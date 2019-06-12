@@ -22,10 +22,20 @@ const getDifferentVariation = (stateA, stateB) => {
   if (counter === 1) return differentVariation
 }
 
+/**
+ * 
+ * @param {*} skus - List of skus, provided by the the product query
+ * @param {*} variations - possible variation objects with keys being variations names and values of each key an array with its possible values
+ * @param {*} skuSelected - the selected sku provided by the context or PDP
+ * 
+ * Builds the state machine, creating every possible state and calculating its transition hash. 
+ * If provided a selected sku, sets a initial selected variation based on this variations values.
+ */
+
 const useStateMachine = (skus, variations, skuSelected) => {
   const stateMachine = useMemo(() => {
-    console.log('testa STATE MACHINE!!!')
-    const [visualVariations, standardVariations] = partition(isColor, Object.keys(variations))
+    const variationsNames = Object.keys(variations)
+    const [visualVariations, standardVariations] = partition(isColor, variationsNames)
     const stateMachine = {
       id: 'SKUSelector',
       states: {},
@@ -94,7 +104,7 @@ const useStateMachine = (skus, variations, skuSelected) => {
         states[keyA].on[actionHash] = keyB
       })    
     })
-    const selectedVariations = skuSelected && Object.keys(variations).reduce((acc, variationName) => {
+    const selectedVariations = skuSelected && variationsNames.reduce((acc, variationName) => {
       return {
         ...acc,
         [variationName]: skuSelected[variationName] ? skuSelected[variationName] : null,

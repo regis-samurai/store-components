@@ -28,8 +28,6 @@ const SelectorItem = ({
   imageLabel,
 }) => {
   const discount = getDiscount(maxPrice, price)
-  console.log('testa SelectorItem render')
-
   return (
     <div
       role="button"
@@ -92,8 +90,6 @@ const SelectorItem = ({
 }
 
 SelectorItem.propTypes = {
-  /** Children components */
-  children: PropTypes.node,
   /** Function that is called when the item is clicked */
   onClick: PropTypes.func,
   /** Flag that indicates if the sku is available */
@@ -110,6 +106,8 @@ SelectorItem.propTypes = {
   isImage: PropTypes.bool,
   /** Value of the variation */
   variationValue: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string,
+  imageLabel: PropTypes.string,
 }
 
 export default memo(SelectorItem)

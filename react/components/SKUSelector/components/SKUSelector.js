@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
-import React, { useCallback, useMemo, memo, Fragment } from 'react'
+import React, { useCallback, useMemo, memo } from 'react'
 
 import Variation from './Variation'
-import { variationShape } from '../utils/proptypes'
 import hash from 'object-hash'
 
 import styles from '../styles.css'
+import { variationShape } from '../utils/proptypes'
 
 /** Renders the main and the secondary variation, if it exists. */
 const SKUSelector = ({
@@ -15,7 +15,6 @@ const SKUSelector = ({
   stateMachine,
   currentStateHash,
 }) => {
-  console.log('testa SKUSelector RENDER')
   const { states: stateMachineStates } = stateMachine
   const stateMachineState = stateMachineStates[currentStateHash]
   const { on: transitions, variations: selectedVariations } = stateMachineState
@@ -58,10 +57,8 @@ const SKUSelector = ({
     }
   }), [variations, currentStateHash, stateMachine])
 
-  console.log('teste variationsWithOptions: ', variationsWithOptions)
-
   return (
-    <Fragment>
+    <div className={styles.skuSelectorContainer}>
       {variationsWithOptions.map((variationOption, index) => {
         const selectedItem = selectedVariations[variationOption.name]
         return (
@@ -74,23 +71,23 @@ const SKUSelector = ({
           />
         )
       })}
-    </Fragment>
+    </div>
   )
 }
 
 SKUSelector.propTypes = {
   /** Function to go to the product page of a given sku */
   onSelectSKU: PropTypes.func.isRequired,
-  /** Name and list of options of the main variation */
-  mainVariation: variationShape,
-  /** Name and list of options of the secondary variation */
-  secondaryVariation: variationShape,
   /** Max price find on the sku list */
   maxSkuPrice: PropTypes.number,
-  /** If true, show secondary options (if present), even when main variation is not picked yet */
-  alwaysShowSecondary: PropTypes.bool,
   seeMoreLabel: PropTypes.string,
   maxItems: PropTypes.number,
+  // Variations object
+  variations: variationShape,
+  // State machine
+  stateMachine: PropTypes.object,
+  // Hash of current state of state machine
+  currentStateHash: PropTypes.string,
 }
 
 export default memo(SKUSelector)

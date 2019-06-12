@@ -13,7 +13,6 @@ import { imageUrlForSize, VARIATION_IMG_SIZE } from '../../module/images'
 const ITEMS_VISIBLE_THRESHOLD = 2
 
 const Variation = ({ variation, maxSkuPrice, seeMoreLabel, maxItems, selectedItem }) => {
-  console.log('testa Variation RENDER')
   const displayImage = isColor(variation.name)
   const { options } = variation
   const [showAll, setShowAll] = useState(false)
@@ -74,26 +73,12 @@ const Variation = ({ variation, maxSkuPrice, seeMoreLabel, maxItems, selectedIte
 Variation.propTypes = {
   /** Variation Object */
   variation: variationShape,
-  /** On Select item behavior */
-  onSelectItem: PropTypes.func,
   /** Max price of SKU */
   maxSkuPrice: PropTypes.number,
-  /** Function to verify if this Variation is selected */
-  checkSelected: PropTypes.func,
   seeMoreLabel: PropTypes.string,
   maxItems: PropTypes.number,
+  /** Label of selected option in this variation. Example: "Small" */
+  selectedItem: PropTypes.string,
 }
-
-// export default memo(Variation, (prevProps, nextProps) => {
-//   console.log('testi variation name: ', nextProps.variation.name)
-//   console.log('testi variation prevProps: ', prevProps)
-//   console.log('testi variation nextProps: ', nextProps)
-//   if (nextProps.variation.name === 'Color') {
-//     console.log('testi is variation equal: ', prevProps.variation === nextProps.variation)
-//     // console.log('testi ')
-//     // console.log('testi is selectedVariations equal: ', prevProps.selectedVariations === nextProps.selectedVariations)
-//   }
-//   return false
-// })
 
 export default memo(Variation)

@@ -83,9 +83,15 @@ SKUSelectorContainer.propTypes = {
   skuItems: PropTypes.arrayOf(skuShape).isRequired,
   /** Callback that is called when an SKU is selected */
   onSKUSelected: PropTypes.func,
-  /** If true, show secondary options (if present), even when main variation is not picked yet. Default to true */
-  alwaysShowSecondary: PropTypes.bool,
   seeMoreLabel: PropTypes.string,
+  maxItems: PropTypes.number,
+
+  /** Object with dynamic keys, with keys being the name of variations and its values being an array of possible values.
+   * Example: { "size": ["small", "medium", "large"], "color": ["blue", "yellow"] }
+   */
+  variations: PropTypes.object,
+
+  skuSelected: skuShape,
 }
 
 SKUSelectorContainer.defaultProps = {
