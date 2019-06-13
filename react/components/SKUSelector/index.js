@@ -22,6 +22,7 @@ const SKUSelectorContainer = ({
   skuSelected,
 }) => {
   const [currentStateHash, setCurrentHash] = useState(null)
+  const [hasStartedStateMacine, setStartedStateMacine] = useState(false)
 
   const { setQuery } = useRuntime()
   const redirectToSku = (skuId) => {
@@ -47,12 +48,17 @@ const SKUSelectorContainer = ({
     }
 
     const stateMachineState = stateMachine.states[stateMachineStateHash]
+
     const { skuId } = stateMachineState
 
-    if (onSKUSelected) {
-      onSKUSelected(skuId)
+    if (hasStartedStateMacine) {
+      if (onSKUSelected) {
+        onSKUSelected(skuId)
+      } else {
+        redirectToSku(skuId)
+      }
     } else {
-      redirectToSku(skuId)
+      setStartedStateMacine(true)
     }
   }
 
