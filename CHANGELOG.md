@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Show option to search for term instead of showing "no matches" in search autocomplete.
 
+### Fixed
+
+- Fix spaces in search autocomplete list.
+
 ## [3.44.0] - 2019-06-17
 ### Changed
 - `SKUSelector` now supports many variations for skus, not only 2.
