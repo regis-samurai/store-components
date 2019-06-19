@@ -1,7 +1,7 @@
 {
   "vendor": "vtex",
   "name": "store-components",
-  "version": "2.6.10",
+  "version": "2.6.11",
   "title": "VTEX Store Components",
   "defaultLocale": "pt-BR",
   "description": "The VTEX store components for that render apps can use",
@@ -20,6 +20,8 @@
   "dependencies": {
     "vtex.store": "1.x",
     "vtex.store-graphql": "2.x",
-    "vtex.styleguide": "7.x"
-  }
+    "vtex.styleguide": "7.x",
+    "vtex.shipping-estimate-translator": "1.x"
+  },
+  "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
 }
