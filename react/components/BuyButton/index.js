@@ -1,8 +1,10 @@
-import PropTypes from 'prop-types'
 import React, { useContext, useCallback, useState, Fragment } from 'react'
+import PropTypes from 'prop-types'
 import { intlShape, FormattedMessage } from 'react-intl'
 import ContentLoader from 'react-content-loader'
 import { pick } from 'ramda'
+
+import styles from './styles.css'
 
 import { Button, ToastContext } from 'vtex.styleguide'
 
@@ -130,7 +132,7 @@ export const BuyButton = ({
   }
 
   return (
-    <Fragment>
+    <div className={styles.buyButton}>
       {!skuItems ? (
         <ContentLoader />
       ) : (
@@ -147,7 +149,7 @@ export const BuyButton = ({
           )}
         </Button>
       )}
-    </Fragment>
+    </div>
   )
 }
 
