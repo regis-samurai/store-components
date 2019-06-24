@@ -1,0 +1,28 @@
+# Summary
+
+- Components
+
+  - [Animation](Animation.md)
+  - [Availability Subscriber](AvailabilitySubscriber.md)
+  - [Buy Button](BuyButton.md)
+  - [Categories Highlights](CategoriesHighlights.md)
+  - [Collection Badges](CollectionBadges.md)
+  - [Container](Container.md)
+  - [Discount Badge](DiscountBadge.md)
+  - [Gradient Collapse](GradientCollapse.md)
+  - [Greeting](Greeting.md)
+  - [Image](Image.md)
+  - [Info Card](InfoCard.md)
+  - [Logo](Logo.md)
+  - [Newsletter](Newsletter.md)
+  - [Notification](Notification.md)
+  - [Product Description](ProductDescription.md)
+  - [Product Highlights](ProductHighlights.md)
+  - [Product Specifications](ProductSpecifications.md)
+  - [Search Bar](SearchBar.md)
+  - [Share](Share.md)
+  - [Slider](Slider.md)
+  - [SKU Selector](SKUSelector.md)
+  - [Shipping Simulator](ShippingSimulator.md)
+
+- [Release notes](https://github.com/vtex-apps/store-components/blob/master/CHANGELOG.md)
