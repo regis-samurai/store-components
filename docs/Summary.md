@@ -24,5 +24,3 @@
   - [Slider](Slider.md)
   - [SKU Selector](SKUSelector.md)
   - [Shipping Simulator](ShippingSimulator.md)
-
-- [Release notes](https://github.com/vtex-apps/store-components/blob/master/CHANGELOG.md)
