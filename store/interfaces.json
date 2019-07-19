@@ -78,5 +78,8 @@
   },
   "image": {
     "component": "Image"
+  },
+  "offline-page": {
+    "component": "OfflinePage"
   }
 }
