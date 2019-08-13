@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React, { useMemo } from 'react'
 
 import Carousel from './components/Carousel'
-import Video from './components/Video/index'
 import styles from './styles.css'
 import { THUMBS_ORIENTATION, THUMBS_POSITION_HORIZONTAL } from './utils/enums'
 

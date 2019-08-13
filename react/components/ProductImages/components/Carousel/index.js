@@ -166,12 +166,12 @@ class Carousel extends Component {
                 `${changeImageUrlSize(slide.url, 1200, 1200)} 1200w`,
               ].join(',')}
               // WIP
-              // This means: if the window has at most 64rem of width,
+              // This means: if the window has at most 64.1rem of width,
               // the image will be of a widht of 100vw. Otherwise, the
               // image will be 50vw wide.
               // This size is used for picking the best available size
               // given the ones from the srcset above.
-              sizes="(max-width: 64rem) 100vw, 50vw"
+              sizes="(max-width: 64.1rem) 100vw, 50vw"
             />
           </div>
         )
